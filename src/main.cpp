@@ -111,9 +111,15 @@ void setup() {
   }
 
   // Send data to the broker with MQTT
-  if (mqtt_client.connect(client_id, mqtt_user, mqtt_pass)==1)
+  if (mqtt_client.connect(client_id, mqtt_user, mqtt_pass))
   {
-    
+    mqtt_client.publish("TD04_GP01/temp", String(temp_measure).c_str());
+    mqtt_client.publish("TD04_GP01/relhum", String(relative_humidity_measure).c_str());
+  
+  }
+  else 
+  {
+    Serial.println("Erreur de connexion au serveur MQTT");
   }
 
   Serial.println("Going to sleep for 5 seconds...");
